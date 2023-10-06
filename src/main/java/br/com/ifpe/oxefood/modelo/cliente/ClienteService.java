@@ -32,7 +32,8 @@ public class ClienteService {
         return repository.findById(id).get();
     }
 
-    @Transactional //utilizar funções transacionais apenas para alterações no banco, consulta não precisa
+    @Transactional // utilizar funções transacionais apenas para alterações no banco, consulta não
+                   // precisa
     public void update(Long id, Cliente clienteAlterado) {
 
         Cliente cliente = repository.findById(id).get();
@@ -43,7 +44,17 @@ public class ClienteService {
         cliente.setFoneFixo(clienteAlterado.getFoneFixo());
 
         cliente.setVersao(cliente.getVersao() + 1);
-        repository.save(cliente); //nesse caso a função save ela é utilizada para dar update
+        repository.save(cliente); // nesse caso a função save ela é utilizada para dar update
+    }
+
+    @Transactional
+    public void delete(Long id) {
+
+        Cliente cliente = repository.findById(id).get();
+        cliente.setHabilitado(Boolean.FALSE);
+        cliente.setVersao(cliente.getVersao() + 1);
+
+        repository.save(cliente);
     }
 
 }
