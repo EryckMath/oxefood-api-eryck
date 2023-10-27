@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.ifpe.oxefood.modelo.fornecedor.Fornecedor;
+//import br.com.ifpe.oxefood.modelo.fornecedor.Fornecedor;
 
 @Service
 public class FornecedorService {

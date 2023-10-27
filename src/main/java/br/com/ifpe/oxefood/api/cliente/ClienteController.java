@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.oxefood.modelo.cliente.Cliente;
 import br.com.ifpe.oxefood.modelo.cliente.ClienteService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api/cliente")
@@ -29,6 +32,7 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
+    @ApiOperation(value = "Serviço responsável por salvar um cliente no sistema.")
     @PostMapping
     public ResponseEntity<Cliente> save(@RequestBody @Valid ClienteRequest request) { // cadastra um novo cliente
 
@@ -36,12 +40,21 @@ public class ClienteController {
         return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Serviço responsável por listar todos os clientes do sistema.")
     @GetMapping
     public List<Cliente> findAll() {
 
         return clienteService.findAll();
     }
 
+    @ApiOperation(value = "Serviço responsável por obter um cliente referente ao Id passado na URL.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna  o cliente."),
+            @ApiResponse(code = 401, message = "Acesso não autorizado."),
+            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
+            @ApiResponse(code = 404, message = "Não foi encontrado um registro para o Id informado."),
+            @ApiResponse(code = 500, message = "Foi gerado um erro no servidor."),
+    })
     @GetMapping("/{id}")
     public Cliente findById(@PathVariable Long id) { // consulta um cliente
 
