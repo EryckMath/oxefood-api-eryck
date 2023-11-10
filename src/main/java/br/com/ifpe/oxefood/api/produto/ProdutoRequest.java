@@ -19,8 +19,10 @@ public class ProdutoRequest {
 
     private String titulo;
 
-    //@JsonFormat(pattern = "dd/MM/yyyy")
-    //private LocalDate dataNascimento;
+    // @JsonFormat(pattern = "dd/MM/yyyy")
+    // private LocalDate dataNascimento;
+
+    private Long idCategoria;
 
     private String codigo;
 
