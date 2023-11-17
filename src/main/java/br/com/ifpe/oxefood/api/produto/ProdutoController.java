@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-//import br.com.ifpe.oxefood.api.cliente.ClienteRequest;
-//import br.com.ifpe.oxefood.modelo.cliente.Cliente;
+import br.com.ifpe.oxefood.modelo.produto.CategoriaProdutoService;
 import br.com.ifpe.oxefood.modelo.produto.Produto;
 import br.com.ifpe.oxefood.modelo.produto.ProdutoService;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -33,13 +34,16 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    
+    @Autowired
+    private CategoriaProdutoService categoriaProdutoService;
 
     @ApiOperation(value = "Serviço responsável por salvar um produto no sistema.")
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request) {
 
-        Produto produto = produtoService.save(request.build());
+        Produto produtoNovo = request.build();
+        produtoNovo.setCategoria(categoriaProdutoService.obterPorID(request.getIdCategoria()));
+        Produto produto = produtoService.save(produtoNovo);
         return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
     }
 
@@ -58,6 +62,7 @@ public class ProdutoController {
             @ApiResponse(code = 404, message = "Não foi encontrado um registro para o Id informado."),
             @ApiResponse(code = 500, message = "Foi gerado um erro no servidor."),
     })
+
     @GetMapping("/{id}")
     public Produto findById(@PathVariable Long id) {
 
@@ -67,7 +72,10 @@ public class ProdutoController {
     @PutMapping("/{id}")
     public ResponseEntity<Produto> update(@PathVariable("id") Long id, @RequestBody ProdutoRequest request) {
 
-        produtoService.update(id, request.build());
+        Produto produto = request.build();
+        produto.setCategoria(categoriaProdutoService.obterPorID(request.getIdCategoria()));
+        produtoService.update(id, produto);
+
         return ResponseEntity.ok().build();
     }
 
@@ -76,6 +84,15 @@ public class ProdutoController {
 
         produtoService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/filtrar")
+    public List<Produto> filtrar(
+            @RequestParam(value = "codigo", required = false) String codigo,
+            @RequestParam(value = "titulo", required = false) String titulo,
+            @RequestParam(value = "idCategoria", required = false) Long idCategoria) {
+
+        return produtoService.filtrar(codigo, titulo, idCategoria);
     }
 
 }

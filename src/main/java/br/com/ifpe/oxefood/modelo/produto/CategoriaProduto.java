@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood.modelo.categoriaProduto;
+package br.com.ifpe.oxefood.modelo.produto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,5 +27,5 @@ public class CategoriaProduto extends EntidadeAuditavel {
 
     @Column
     private String descricao;
-    
+
 }

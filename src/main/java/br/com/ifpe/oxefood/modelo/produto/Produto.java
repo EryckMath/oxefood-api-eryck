@@ -9,7 +9,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Where;
 
-import br.com.ifpe.oxefood.modelo.categoriaProduto.CategoriaProduto;
 import br.com.ifpe.oxefood.util.entity.EntidadeAuditavel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

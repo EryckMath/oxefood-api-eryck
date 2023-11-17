@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood.modelo.categoriaProduto;
+package br.com.ifpe.oxefood.modelo.produto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -8,13 +8,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.ifpe.oxefood.modelo.categoriaProduto.CategoriaProduto;
-import br.com.ifpe.oxefood.modelo.categoriaProduto.CategoriaProdutoRepository;
-
 @Service
 public class CategoriaProdutoService {
 
-     @Autowired
+    @Autowired
     private CategoriaProdutoRepository repository;
 
     @Transactional
@@ -31,20 +28,19 @@ public class CategoriaProdutoService {
         return repository.findAll();
     }
 
-    public CategoriaProduto findById(Long id) {
+    public CategoriaProduto obterPorID(Long id) {
 
         return repository.findById(id).get();
     }
 
-    @Transactional // utilizar funções transacionais apenas para alterações no banco, consulta não
-                   // precisa
+    @Transactional
     public void update(Long id, CategoriaProduto categoriaProdutoAlterado) {
 
         CategoriaProduto categoriaProduto = repository.findById(id).get();
         categoriaProduto.setDescricao(categoriaProdutoAlterado.getDescricao());
 
         categoriaProduto.setVersao(categoriaProduto.getVersao() + 1);
-        repository.save(categoriaProduto); // nesse caso a função save ela é utilizada para dar update
+        repository.save(categoriaProduto);
     }
 
     @Transactional
@@ -56,5 +52,5 @@ public class CategoriaProdutoService {
 
         repository.save(categoriaProduto);
     }
-    
+
 }
