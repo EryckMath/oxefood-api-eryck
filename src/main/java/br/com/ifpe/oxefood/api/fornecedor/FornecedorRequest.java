@@ -2,6 +2,9 @@ package br.com.ifpe.oxefood.api.fornecedor;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.ifpe.oxefood.modelo.fornecedor.Fornecedor;
@@ -16,6 +19,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class FornecedorRequest {
+    @NotNull(message = "O Nome é de preenchimento obrigatório")
+    @NotBlank(message = "O Nome é de preenchimento obrigatório")
     private String nome;
 
     private String endereco;

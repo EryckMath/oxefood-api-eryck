@@ -30,7 +30,7 @@ public class Produto extends EntidadeAuditavel {
     @ManyToOne
     private CategoriaProduto categoria;
 
-    @Column
+    @Column(nullable = false)
     private String titulo;
 
     @Column
